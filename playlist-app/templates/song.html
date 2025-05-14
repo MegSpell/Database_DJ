@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ song.title }}{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-4">{{ song.title }}</h1>
+  <p class="lead">&mdash; {{ song.artist }}</p>
+</div>
+
+<h3>Playlists containing this song</h3>
+
+{% if song.playlists %}
+  <ul class="list-group mb-4">
+    {% for assoc in song.playlists %}
+      <li class="list-group-item">
+        <a href="/playlists/{{ assoc.playlist.id }}">{{ assoc.playlist.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">This song isn't in any playlists yet.</p>
+{% endif %}
+
+<form method="POST" action="/songs/{{ song.id }}/delete"
+      onsubmit="return confirm('Are you sure you want to delete this song?');">
+  <button class="btn btn-danger">
+    <i class="fas fa-trash-alt"></i> Delete Song
+  </button>
+</form>
+
+{% endblock %}

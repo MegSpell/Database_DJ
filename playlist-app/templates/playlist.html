@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ playlist.name }}{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-4">{{ playlist.name }}</h1>
+  {% if playlist.description %}
+    <p class="lead">{{ playlist.description }}</p>
+  {% endif %}
+</div>
+
+<h3>Songs in this Playlist</h3>
+
+{% if playlist.songs %}
+  <ul class="list-group mb-4">
+    {% for assoc in playlist.songs %}
+      <li class="list-group-item">
+        {{ assoc.song.title }} by {{ assoc.song.artist }}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No songs in this playlist yet.</p>
+{% endif %}
+
+<p>
+  <a class="btn btn-primary" href="/playlists/{{ playlist.id }}/add-song">
+    Add Song To Playlist
+  </a>
+</p>
+
+<form method="POST" action="/playlists/{{ playlist.id }}/delete"
+      onsubmit="return confirm('Are you sure you want to delete this playlist?');">
+  <button class="btn btn-danger">
+    <i class="fas fa-trash-alt"></i> Delete Playlist
+  </button>
+</form>
+
+{% endblock %}

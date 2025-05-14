@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}All Playlists{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">All Playlists</h1>
+
+{% if playlists %}
+  <ul class="list-group mb-4">
+    {% for playlist in playlists %}
+      <li class="list-group-item">
+        <a href="/playlists/{{ playlist.id }}">{{ playlist.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No playlists created yet.</p>
+{% endif %}
+
+<p>
+  <a class="btn btn-primary" href="/playlists/add">Add a Playlist</a>
+</p>
+
+{% endblock %}
